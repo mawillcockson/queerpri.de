@@ -1,0 +1,13 @@
+---
+- name: "A simple playbook"
+  gather_facts: true
+  become: true
+  become_method: "ansible.builtin.sudo"
+  tasks:
+    - name: "Create a file with some information on our host"
+      ansible.builtin.copy:
+        dest: "/home/ansible/info.txt"
+        mode: "0444"
+        owner: ansible
+        group: ansible
+        content: "I am connecting to {{ ansible_nodename }} which is running {{ ansible_distribution }} {{ ansible_distribution_version }}"

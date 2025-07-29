@@ -33,16 +33,16 @@ user:
   ssh_import_id: "gh:mawillcockson"
   sudo: "ALL=(ALL) NOPASSWD:ALL"
 
-#ansible:
-#  package_name: "ansible-core"
-#  install_method: pip
-#  run_user: ansible
-#  pull:
-#    - clean: true
-#      url: "https://github.com/mawillcockson/queerpri.de.git"
-#      connection: local
-#      inventory: localhost
-#      playbook_names:
-#        - playbook.yml
+ansible:
+  package_name: "ansible-core"
+  install_method: pip
+  run_user: ansible
+  pull:
+    - clean: true
+      url: "https://github.com/mawillcockson/queerpri.de.git"
+      connection: local
+      inventory: localhost
+      playbook_names:
+        - playbook.yml
 
 final_message: "cloud-init {{ version }} loaded data from {{ datasource}} and finished at {{ timestamp }}"

@@ -56,4 +56,4 @@ ansible:
     connection: local
     playbook_name: "playbook.yml"
 
-final_message: "cloud-init {{ version }} loaded data from {{ datasource}} and finished at {{ timestamp }}"
+final_message: "cloud-init $version loaded data from $datasource and finished at $timestamp"

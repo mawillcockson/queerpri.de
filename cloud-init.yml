@@ -45,7 +45,6 @@ ansible:
     clean: true
     url: "https://github.com/mawillcockson/queerpri.de.git"
     connection: local
-    inventory: localhost
     playbook_name: "playbook.yml"
 
 final_message: "cloud-init {{ version }} loaded data from {{ datasource}} and finished at {{ timestamp }}"

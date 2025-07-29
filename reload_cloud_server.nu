@@ -224,4 +224,19 @@ def recreate_server [--server: record] {
             }
         }
     }
+
+    log info 'assigning PTR records to ip addresses...'
+    let ipv4_ptr_response = (
+        http post -H (default_headers) -t application/json $'https://api.hetzner.cloud/primary_ips/($ipv4.id)/actions/change_dns_ptr' {
+            ip: $ipv4.ip,
+            dns_ptr: $fqdn,
+        } | await_action
+    )
+    let ipv6_ptr_response = (
+        http post -H (default_headers) -t application/json $'https://api.hetzner.cloud/primary_ips/($ipv6.id)/actions/change_dns_ptr' {
+            ip: ($ipv6.ip | str replace '::/64' '::1'),
+            dns_ptr: $fqdn,
+        } | await_action
+    )
+    log info 'finished assigning PTR records to ip addresses'
 }

@@ -1,6 +1,9 @@
 #cloud-config
+# debian 12 on Hetzner uses V22.4.2
+# https://docs.cloud-init.io/en/22.4.2/topics/modules.html
+
 fqdn: "queerpri.de"
-create_hostname_file: true
+#create_hostname_file: true
 
 ssh_pwauth: false
 write_files:
@@ -38,11 +41,10 @@ ansible:
   install_method: pip
   run_user: ansible
   pull:
-    - clean: true
-      url: "https://github.com/mawillcockson/queerpri.de.git"
-      connection: local
-      inventory: localhost
-      playbook_names:
-        - playbook.yml
+    clean: true
+    url: "https://github.com/mawillcockson/queerpri.de.git"
+    connection: local
+    inventory: localhost
+    playbook_name: "playbook.yml"
 
 final_message: "cloud-init {{ version }} loaded data from {{ datasource}} and finished at {{ timestamp }}"

@@ -33,7 +33,8 @@ user:
   lock_passwd: true
   # in KeePass
   hashed_passwd: "$6$rounds=500000$zfpsDmXcT8ia4Ab/$Ub1/ucOUhvRQtb0xp3UdWgxx2pzFwJFXQRtE.EIGc2/n/CJpSs84lbgnAiTB2zKsQsRzXhenxC1/4WZaqr3ZS."
-  ssh_import_id: "gh:mawillcockson"
+  ssh_import_id:
+    - "gh:mawillcockson"
   sudo: "ALL=(ALL) NOPASSWD:ALL"
 
 ansible:

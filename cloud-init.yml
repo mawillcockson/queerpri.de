@@ -41,6 +41,15 @@ ansible:
   package_name: "ansible-core"
   install_method: pip
   run_user: ansible
+  #setup_controller:
+  #  repositories:
+  #    - path: "/home/ansible/queerpri.de/"
+  #      source: "https://github.com/mawillcockson/queerpri.de.git"
+  #  run_ansible:
+  #    playbook_name: "playbook.yml"
+  #    playbook_dir: "/home/ansible/queerpri.de/"
+  #    connection: local
+  #    inventory: localhost
   pull:
     clean: true
     url: "https://github.com/mawillcockson/queerpri.de.git"

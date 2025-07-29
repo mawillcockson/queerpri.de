@@ -1,0 +1,48 @@
+#cloud-config
+fqdn: "queerpri.de"
+create_hostname_file: true
+
+ssh_pwauth: false
+write_files:
+  - path: /etc/ssh/sshd_config.d/70-no-pam-password-auth.conf
+    content: "KbdInteractiveAuthentication no"
+    permissions: "0500"
+# Remove host SSH keys. This prevents re-use of a private host key from an image with default host SSH keys.
+ssh_deletekeys: true
+# The SSH host key types to generate.
+ssh_genkeytypes: [ecdsa, ed25519]
+# PermitRootLogin no
+disable_root: true
+
+timezone: "America/Chicago"
+
+packages:
+  - sudo
+  - python3
+  - git
+package_update: true
+package_upgrade: true
+package_reboot_if_required: true
+
+user:
+  name: ansible
+  homedir: /home/ansible/
+  lock_passwd: true
+  # in KeePass
+  hashed_passwd: "$6$rounds=500000$zfpsDmXcT8ia4Ab/$Ub1/ucOUhvRQtb0xp3UdWgxx2pzFwJFXQRtE.EIGc2/n/CJpSs84lbgnAiTB2zKsQsRzXhenxC1/4WZaqr3ZS."
+  ssh_import_id: "gh:mawillcockson"
+  sudo: "ALL=(ALL) NOPASSWD:ALL"
+
+#ansible:
+#  package_name: "ansible-core"
+#  install_method: pip
+#  run_user: ansible
+#  pull:
+#    - clean: true
+#      url: "https://github.com/mawillcockson/queerpri.de.git"
+#      connection: local
+#      inventory: localhost
+#      playbook_names:
+#        - playbook.yml
+
+final_message: "cloud-init {{ version }} loaded data from {{ datasource}} and finished at {{ timestamp }}"

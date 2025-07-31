@@ -46,10 +46,10 @@ ansible:
   #    - path: "/home/ansible/queerpri.de/"
   #      source: "https://github.com/mawillcockson/queerpri.de.git"
   #  run_ansible:
-  #    playbook_name: "playbook.yml"
-  #    playbook_dir: "/home/ansible/queerpri.de/"
-  #    connection: local
-  #    inventory: localhost
+  #    - playbook_name: "playbook.yml"
+  #      playbook_dir: "/home/ansible/queerpri.de/"
+  #      connection: local
+  #      inventory: localhost
   pull:
     clean: true
     url: "https://github.com/mawillcockson/queerpri.de.git"

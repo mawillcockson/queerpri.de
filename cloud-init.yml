@@ -21,7 +21,7 @@ timezone: "America/Chicago"
 
 packages:
   - sudo
-  - python3
+  - python3-pip
   - git
 package_update: true
 package_upgrade: true

@@ -1,8 +1,5 @@
 ---
 - name: "A simple playbook"
-  hosts:
-    - localhost
-  connection: local
   gather_facts: true
   become: true
   become_method: "ansible.builtin.sudo"

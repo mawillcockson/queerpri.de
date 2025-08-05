@@ -1,5 +1,6 @@
 ---
 - name: "A simple playbook"
+  hosts: "queerpri.de"
   gather_facts: true
   become: true
   become_method: "ansible.builtin.sudo"

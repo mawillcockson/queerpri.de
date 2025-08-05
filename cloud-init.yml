@@ -37,23 +37,54 @@ user:
     - "gh:mawillcockson"
   sudo: "ALL=(ALL) NOPASSWD:ALL"
 
-ansible:
-  package_name: "ansible-core"
-  install_method: pip
-  run_user: ansible
-  #setup_controller:
-  #  repositories:
-  #    - path: "/home/ansible/queerpri.de/"
-  #      source: "https://github.com/mawillcockson/queerpri.de.git"
-  #  run_ansible:
-  #    - playbook_name: "playbook.yml"
-  #      playbook_dir: "/home/ansible/queerpri.de/"
-  #      connection: local
-  #      inventory: localhost
-  pull:
-    clean: true
-    url: "https://github.com/mawillcockson/queerpri.de.git"
-    connection: local
-    playbook_name: "playbook.yml"
+# manually install ansible because this version of cloud-init cannot:
+# https://packages.debian.org/bookworm/source/cloud-init
+# lists current version as 22.4.2-1~deb12u2
+# https://salsa.debian.org/cloud-team/cloud-init/-/blob/debian/22.4.2-1%2Bdeb12u2/cloudinit/config/cc_ansible.py#L128-142
+runcmd:
+  - [
+      sudo,
+      "-u",
+      ansible,
+      "python3",
+      "-m",
+      pip,
+      install,
+      "--user",
+      "--upgrade",
+      "--break-system-packages",
+      pipx,
+    ]
+  - [sudo, "-u", ansible, "python3", "-m", pipx, ensurepath]
+  - [sudo, "-u", ansible, "python3", "-m", pipx, install, "ansible-core"]
+  - [
+      sudo,
+      "-u",
+      ansible,
+      "/home/ansible/.local/bin/ansible-pull",
+      "--url=https://github.com/mawillcockson/queerpri.de.git",
+      "--connection=local",
+      "--directory=/home/ansible/queerpri.de",
+    ]
+
+# cloud-init can't install ansible
+#ansible:
+#  package_name: "ansible-core"
+#  install_method: pip
+#  run_user: ansible
+#  #setup_controller:
+#  #  repositories:
+#  #    - path: "/home/ansible/queerpri.de/"
+#  #      source: "https://github.com/mawillcockson/queerpri.de.git"
+#  #  run_ansible:
+#  #    - playbook_name: "playbook.yml"
+#  #      playbook_dir: "/home/ansible/queerpri.de/"
+#  #      connection: local
+#  #      inventory: localhost
+#  pull:
+#    clean: true
+#    url: "https://github.com/mawillcockson/queerpri.de.git"
+#    connection: local
+#    playbook_name: "playbook.yml"
 
 final_message: "cloud-init $version loaded data from $datasource and finished at $timestamp"

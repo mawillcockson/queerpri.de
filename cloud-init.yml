@@ -24,6 +24,7 @@ packages:
   - python3-pip
   - python3-venv
   - git
+  - curl
 package_update: true
 package_upgrade: true
 package_reboot_if_required: true
@@ -45,7 +46,7 @@ user:
 runcmd:
   - [
       sudo,
-      "-u",
+      "-iu",
       ansible,
       "python3",
       "-m",
@@ -56,11 +57,31 @@ runcmd:
       "--break-system-packages",
       pipx,
     ]
-  - [sudo, "-u", ansible, "python3", "-m", pipx, ensurepath]
-  - [sudo, "-u", ansible, "python3", "-m", pipx, install, "ansible-core"]
+  - [sudo, "-iu", ansible, "python3", "-m", pipx, ensurepath]
+  - [sudo, "-iu", ansible, "python3", "-m", pipx, install, "ansible-core"]
   - [
       sudo,
-      "-u",
+      "-iu",
+      ansible,
+      curl,
+      "-L",
+      "https://github.com/mawillcockson/queerpri.de/raw/refs/heads/main/roles/requirements.yml",
+      "--output",
+      "/home/ansible/requirements.yml",
+    ]
+  - [
+      sudo,
+      "-iu",
+      ansible,
+      "/home/ansible/.local/bin/ansible-galaxy",
+      role,
+      install,
+      "-r",
+      "/home/ansible/requirements.yml",
+    ]
+  - [
+      sudo,
+      "-iu",
       ansible,
       "/home/ansible/.local/bin/ansible-pull",
       "--url=https://github.com/mawillcockson/queerpri.de.git",

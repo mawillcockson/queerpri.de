@@ -13,3 +13,9 @@
         owner: ansible
         group: ansible
         content: "This was run on {{ ansible_nodename }} which is running {{ ansible_distribution }} {{ ansible_distribution_version }}"
+
+  roles:
+    - role: geerlingguy.pip
+      vars:
+        pip_install_packages:
+          - cowsay

@@ -38,7 +38,8 @@ in
   ];
 
   # I could use `users.users.root.initialPassword`, but I want to do this the hard way
-  users.users.root.initialHashedPassword = builtins.readFile rootHashedPasswordFile;
+  users.users.root.initialHashedPassword =
+    builtins.readFile rootHashedPasswordFile |> pkgs.lib.strings.trim;
   users.users.root.openssh.authorizedKeys.keys = [
     # change this to your ssh key
     (builtins.readFile (

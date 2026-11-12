@@ -4,6 +4,20 @@
   pkgs,
   ...
 }@args:
+let
+  rootHashedPasswordFile =
+    pkgs.runCommandWith
+      {
+        name = "make-hashed-password";
+        runLocal = true;
+        stdenv = pkgs.stdenvNoCC;
+        derivationArgs.nativeBuildInputs = [ pkgs.mkpasswd ];
+      }
+      ''
+        printf 'password' | mkpasswd --method=scrypt --stdin > "$out"
+      '';
+
+in
 {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -23,6 +37,8 @@
     pkgs.gitMinimal
   ];
 
+  # I could use `users.users.root.initialPassword`, but I want to do this the hard way
+  users.users.root.initialHashedPassword = builtins.readFile rootHashedPasswordFile;
   users.users.root.openssh.authorizedKeys.keys = [
     # change this to your ssh key
     (builtins.readFile (
